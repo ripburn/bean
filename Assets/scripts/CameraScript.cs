@@ -14,6 +14,7 @@ public class CameraScript : MonoBehaviour {
 	private string key = "HIGH SCORE";
 	private Transform playerTrans;
 	private int createWallPos = 5;
+	private int wall_x;
 	// Use this for initialization
 	void Start () {
 		playerTrans = player.GetComponent<Transform> ();
@@ -56,11 +57,14 @@ public class CameraScript : MonoBehaviour {
 	
 	}
 	void CreateStep(){
-		Instantiate (step, new Vector2 (Random.Range (-6.0f, 0f), scoreUpPos + Random.Range (4.0f, 6.0f)), step.transform.rotation);
-		Instantiate (step, new Vector2 (Random.Range (0f, 6.0f), scoreUpPos + Random.Range (4.0f, 6.0f)), step.transform.rotation);
+		if (Random.Range (0, 10) < 5) {
+			wall_x = 2;
+		} else {
+			wall_x = -2;
+		}
+		Instantiate (step, new Vector2 (wall_x, scoreUpPos + 2), step.transform.rotation);
 	}
 	void CreateWall(){
 		Instantiate (wall, new Vector2 (7f, createWallPos + 10), wall.transform.rotation);
-		Instantiate (wall, new Vector2 (-7f, createWallPos + 10), wall.transform.rotation);
 	}
 }

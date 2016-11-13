@@ -6,7 +6,7 @@ public class Player : MonoBehaviour {
 	Animator anim;
 	public int moveSpeed = 2;
 	public LayerMask groundLayer;
-	float jumpForce = 500;
+	float jumpForce = 1600;
 	bool isGrounded;
 
 	// Use this for initialization
@@ -18,14 +18,22 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		rb.velocity = new Vector2 (moveSpeed * transform.localScale.x, rb.velocity.y);
+		//rb.velocity = new Vector2 (moveSpeed * transform.localScale.x, rb.velocity.y);
 		isGrounded = Physics2D.Linecast (
 			transform.position + transform.up * 1,
-			transform.position - transform.up * 0.1f,
+			transform.position - transform.up * 0.05f,
 			groundLayer);
-		if (isGrounded && Input.GetButtonDown ("Jump")) {
+		if (isGrounded && Input.GetKeyDown (KeyCode.LeftArrow)) {
+			Left ();
+		}
+		if (isGrounded && Input.GetKeyDown (KeyCode.RightArrow)) {
+			Right ();
+		}
+		if (isGrounded && Input.GetKeyDown (KeyCode.Space)) {
 			Jump ();
 		}
+
+
 		Anim ();
 	
 	}
@@ -36,9 +44,19 @@ public class Player : MonoBehaviour {
 			gameObject.transform.localScale = tmp;
 		}
 	}
+	void Left(){
+		anim.SetTrigger ("Jump");
+		rb.AddForce (new Vector2(-360, jumpForce));
+		isGrounded = false;
+	}
+	void Right(){
+		anim.SetTrigger ("Jump");
+		rb.AddForce (new Vector2(360, jumpForce));
+		isGrounded = false;
+	}
 	void Jump(){
 		anim.SetTrigger ("Jump");
-		rb.AddForce (Vector2.up * jumpForce);
+		rb.AddForce (new Vector2 (0, jumpForce));
 		isGrounded = false;
 	}
 	void Anim(){
