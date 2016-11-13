@@ -65,6 +65,6 @@ public class CameraScript : MonoBehaviour {
 		Instantiate (step, new Vector2 (wall_x, scoreUpPos + 2), step.transform.rotation);
 	}
 	void CreateWall(){
-		Instantiate (wall, new Vector2 (7f, createWallPos + 10), wall.transform.rotation);
+		//Instantiate (wall, new Vector2 (7f, createWallPos + 10), wall.transform.rotation);
 	}
 }
