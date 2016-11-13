@@ -21,8 +21,11 @@ public class Player : MonoBehaviour {
 		//rb.velocity = new Vector2 (moveSpeed * transform.localScale.x, rb.velocity.y);
 		isGrounded = Physics2D.Linecast (
 			transform.position + transform.up * 1,
-			transform.position - transform.up * 0.05f,
+			transform.position - transform.up * 0.02f,
 			groundLayer);
+		if (Ground.stay) {
+			isGrounded = false;
+		}
 		if (isGrounded && Input.GetKeyDown (KeyCode.LeftArrow)) {
 			Left ();
 		}

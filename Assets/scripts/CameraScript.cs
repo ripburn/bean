@@ -9,7 +9,7 @@ public class CameraScript : MonoBehaviour {
 	public GameObject step;
 	public GameObject wall;
 	private int score = 0;
-	private int scoreUpPos = 3;
+	private int scoreUpPos = 2;
 	private int highScore;
 	private string key = "HIGH SCORE";
 	private Transform playerTrans;
