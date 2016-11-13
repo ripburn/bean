@@ -8,11 +8,15 @@ public class Player : MonoBehaviour {
 	public LayerMask groundLayer;
 	float jumpForce = 1600;
 	bool isGrounded;
+	private string location;
+	private App_Touch.TouchInfo touch;
+	private Vector3 touch_pos;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator> ();
+		location = "Right";
 	
 	}
 	
@@ -26,17 +30,26 @@ public class Player : MonoBehaviour {
 		if (Ground.stay) {
 			isGrounded = false;
 		}
-		if (isGrounded && Input.GetKeyDown (KeyCode.LeftArrow)) {
-			Left ();
-		}
-		if (isGrounded && Input.GetKeyDown (KeyCode.RightArrow)) {
-			Right ();
-		}
-		if (isGrounded && Input.GetKeyDown (KeyCode.Space)) {
-			Jump ();
-		}
+		touch = App_Touch.GetTouch ();
+		if (touch == App_Touch.TouchInfo.Began && isGrounded) {
+			touch_pos = App_Touch.GetTouchPosition();
+			if (touch_pos.x > 0) {
+				if (location == "Right"){
+					Jump ();
+				}
+				else {
+					Right();
+				}
+			} else {
+				if (location == "Left"){
+					Jump();
+				}
+				else{
+				Left ();
+				}
 
-
+			}
+		}
 		Anim ();
 	
 	}
@@ -51,11 +64,13 @@ public class Player : MonoBehaviour {
 		anim.SetTrigger ("Jump");
 		rb.AddForce (new Vector2(-360, jumpForce));
 		isGrounded = false;
+		location = "Left";
 	}
 	void Right(){
 		anim.SetTrigger ("Jump");
 		rb.AddForce (new Vector2(360, jumpForce));
 		isGrounded = false;
+		location = "Right";
 	}
 	void Jump(){
 		anim.SetTrigger ("Jump");
